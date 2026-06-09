@@ -20,9 +20,9 @@ Example Configuration:
     JENKINS_PASS  - Jenkins password
 
 Example Commands:
-  $ jk status etp-s-box -b development
-  $ jk status etp-s-box
-  $ jk why etp-s-box -b development --json
+  $ jk status my-pipeline-job -b development
+  $ jk status my-pipeline-job
+  $ jk why my-pipeline-job -b development --json
 `);
 
 program

@@ -34,12 +34,12 @@ jk status <job-name> -b <branch-name> -n <build-number> --json
 ```json
 {
   "isMultibranch": true,
-  "projectName": "etp_s-box_backend",
+  "projectName": "my_pipeline_job",
   "branchName": "development",
-  "name": "etp_s-box_backend » development",
+  "name": "my_pipeline_job » development",
   "build": {
     "number": 2172,
-    "url": "http://10.1.1.4:5050/job/etp_s-box_backend/job/development/2172/",
+    "url": "http://your-jenkins-server/job/my_pipeline_job/job/development/2172/",
     "result": "SUCCESS", // SUCCESS, FAILURE, ABORTED, or null (if building)
     "building": false,
     "duration": 1299498,
@@ -47,8 +47,8 @@ jk status <job-name> -b <branch-name> -n <build-number> --json
     "commits": [
       {
         "id": "42d1d5aea0822d807994e218eb289638ec9ca7fd",
-        "msg": "[ES-3760] fixed tests",
-        "author": "anton.mashkov",
+        "msg": "fixed tests",
+        "author": "developer",
         "date": "2026-06-09 00:06:00 +0300"
       }
     ],
@@ -78,9 +78,9 @@ This will automatically extract up to 10 root-cause errors (e.g. Java compilatio
 **JSON response format:**
 ```json
 {
-  "projectName": "etp_s-box_backend",
-  "branchName": "feature-ES-3461-replace-scenario-with-variant",
-  "name": "etp_s-box_backend » feature-ES-3461-replace-scenario-with-variant",
+  "projectName": "my_pipeline_job",
+  "branchName": "feature-branch",
+  "name": "my_pipeline_job » feature-branch",
   "build": {
     "number": 1,
     "result": "FAILURE",
@@ -91,10 +91,10 @@ This will automatically extract up to 10 root-cause errors (e.g. Java compilatio
   "errors": [
     {
       "line": 618,
-      "message": "[ERROR] /path/to/EtpVariantId.java:[3,49] cannot find symbol",
+      "message": "[ERROR] /path/to/File.java:[3,49] cannot find symbol",
       "stack": [
-        "  symbol:   class VariantType",
-        "  location: package com.esprow.orchestra.model.etp.repository"
+        "  symbol:   class SomeType",
+        "  location: package com.example.repository"
       ]
     }
   ]
@@ -103,4 +103,4 @@ This will automatically extract up to 10 root-cause errors (e.g. Java compilatio
 
 ## Troubleshooting
 
-- **Error: "Job ... was not found..."** -> Check job name spelling. The CLI performs fuzzy matching (e.g. matching `etp-s-box` to `etp_s-box_backend`).
+- **Error: "Job ... was not found..."** -> Check job name spelling. The CLI performs fuzzy matching (e.g. matching `my-pipeline-job` to `my_pipeline_job`).

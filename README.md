@@ -60,17 +60,17 @@ This mode allows you to:
 
 To get the status of the last build of a specific branch in a multibranch pipeline:
 ```bash
-jk status etp-s-box -b development
+jk status my-pipeline-job -b development
 ```
 
 To view a list of all active branches and their current statuses:
 ```bash
-jk status etp-s-box
+jk status my-pipeline-job
 ```
 
 To output structured JSON (recommended for AI agents):
 ```bash
-jk status etp-s-box -b development --json
+jk status my-pipeline-job -b development --json
 ```
 
 **Options for `status`:**
@@ -84,14 +84,14 @@ jk status etp-s-box -b development --json
 
 To analyze the root cause of a failed build on branch `development`:
 ```bash
-jk why etp-s-box -b development
+jk why my-pipeline-job -b development
 ```
 
 This will automatically extract up to 10 errors (compilation errors, test failures, stack traces) from the raw logs, removing Maven and Jenkins boilerplate.
 
 To get the diagnostics in JSON format:
 ```bash
-jk why etp-s-box -b development --json
+jk why my-pipeline-job -b development --json
 ```
 
 **Options for `why`:**
