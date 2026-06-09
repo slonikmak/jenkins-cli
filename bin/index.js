@@ -3,6 +3,7 @@
 import { Command } from 'commander';
 import { handleStatus } from '../src/commands/status.js';
 import { handleWhy } from '../src/commands/why.js';
+import { handleTui } from '../src/commands/tui.js';
 
 const program = new Command();
 
@@ -42,4 +43,8 @@ program
   .option('--json', 'Output result in JSON format (for agents)')
   .action(handleWhy);
 
-program.parse();
+if (process.argv.length <= 2 && process.stdout.isTTY) {
+  handleTui();
+} else {
+  program.parse();
+}

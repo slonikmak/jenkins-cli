@@ -256,3 +256,29 @@ export function parseErrorsFromLog(logText) {
   // Return the first 10 unique errors to avoid flooding and capture root causes
   return errors.slice(0, 10);
 }
+
+/**
+ * Fetch all top-level jobs from Jenkins.
+ */
+export async function getAllJobs() {
+  const baseUrl = getJenkinsUrl();
+  const headers = getHeaders();
+  const response = await fetch(`${baseUrl}api/json`, { headers });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch job list from Jenkins (HTTP ${response.status})`);
+  }
+  const data = await response.json();
+  return data.jobs || [];
+}
+
+/**
+ * Fetch details of a specific job (including its sub-jobs/branches).
+ */
+export async function getJobDetails(jobUrl) {
+  const headers = getHeaders();
+  const response = await fetch(`${jobUrl}api/json`, { headers });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch job details (HTTP ${response.status})`);
+  }
+  return await response.json();
+}
