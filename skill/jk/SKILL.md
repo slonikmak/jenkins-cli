@@ -10,10 +10,6 @@ Use this skill to fetch the build status of Jenkins jobs and analyze the root ca
 ## Prerequisites
 
 - The global `jk` tool must be installed (run `npm link` in the tool directory if not linked).
-- Environment variables must be set (either in the system environment or in `~/.env`):
-  - `JENKINS_URL` — Jenkins server URL (e.g. `http://your-jenkins-server/`)
-  - `JENKINS_USER` — Jenkins username (e.g. `your_username`) or `JENKINS_LOGIN`
-  - `JENKINS_PASS` — Jenkins password
 
 ## Workflow for Agents
 
@@ -107,5 +103,4 @@ This will automatically extract up to 10 root-cause errors (e.g. Java compilatio
 
 ## Troubleshooting
 
-- **Error: "URL Jenkins не задан..."** -> Ensure `JENKINS_URL`, `JENKINS_USER`, and `JENKINS_PASS` are defined in system environment variables or in the home `.env` file (`C:\Users\AntonMashkov\.env`).
-- **Error: "Задача ... не найдена..."** -> Check job name spelling. The CLI performs fuzzy matching (e.g. matching `etp-s-box` to `etp_s-box_backend`).
+- **Error: "Job ... was not found..."** -> Check job name spelling. The CLI performs fuzzy matching (e.g. matching `etp-s-box` to `etp_s-box_backend`).
