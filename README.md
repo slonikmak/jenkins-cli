@@ -43,6 +43,19 @@ JENKINS_PASS=your_password
 
 ## Usage
 
+### Interactive TUI Mode
+
+If you run the command without any arguments in an interactive terminal, it will start TUI mode:
+```bash
+jk
+```
+This mode allows you to:
+1. Search and select a project using fuzzy autocomplete (simply start typing to filter).
+2. For multibranch projects, search and select the branch.
+3. Select the action: show status or analyze build failure.
+
+---
+
 ### 1. Build Status (`status`)
 
 To get the status of the last build of a specific branch in a multibranch pipeline:
