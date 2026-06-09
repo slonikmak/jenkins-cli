@@ -9,7 +9,20 @@ const program = new Command();
 program
   .name('jk')
   .description('Jenkins CLI to check build status and analyze failures')
-  .version('1.0.0');
+  .version('1.0.0')
+  .addHelpText('after', `
+
+Example Configuration:
+  Set these environment variables or define them in a ~/.env file:
+    JENKINS_URL   - Jenkins server URL (e.g., http://your-jenkins-server/)
+    JENKINS_USER  - Jenkins username (or JENKINS_LOGIN)
+    JENKINS_PASS  - Jenkins password
+
+Example Commands:
+  $ jk status etp-s-box -b development
+  $ jk status etp-s-box
+  $ jk why etp-s-box -b development --json
+`);
 
 program
   .command('status')
