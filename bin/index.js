@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { handleStatus } from '../src/commands/status.js';
 import { handleWhy } from '../src/commands/why.js';
 import { handleTui } from '../src/commands/tui.js';
+import { handleTrigger } from '../src/commands/trigger.js';
 
 const program = new Command();
 
@@ -23,6 +24,7 @@ Example Commands:
   $ jk status my-pipeline-job -b development
   $ jk status my-pipeline-job
   $ jk why my-pipeline-job -b development --json
+  $ jk trigger my-pipeline-job
 `);
 
 program
@@ -42,6 +44,14 @@ program
   .option('-n, --build <number>', 'Build number (default: lastBuild)')
   .option('--json', 'Output result in JSON format (for agents)')
   .action(handleWhy);
+
+program
+  .command('trigger')
+  .description('Trigger a new build of a job')
+  .argument('<job>', 'Jenkins job name')
+  .option('-b, --branch <branch>', 'Branch name (for multibranch projects)')
+  .option('--json', 'Output result in JSON format (for agents)')
+  .action(handleTrigger);
 
 if (process.argv.length <= 2 && process.stdout.isTTY) {
   handleTui();

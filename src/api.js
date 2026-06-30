@@ -276,9 +276,66 @@ export async function getAllJobs() {
  */
 export async function getJobDetails(jobUrl) {
   const headers = getHeaders();
-  const response = await fetch(`${jobUrl}api/json`, { headers });
+  const response = await fetch(jobUrl, { headers });
   if (!response.ok) {
     throw new Error(`Failed to fetch job details (HTTP ${response.status})`);
   }
   return await response.json();
+}
+
+/**
+ * Trigger a build for a job/branch.
+ */
+export async function triggerJob(jobUrl) {
+  const baseUrl = getJenkinsUrl();
+  const headers = getHeaders();
+
+  let crumbHeaderName = null;
+  let crumbValue = null;
+  let cookie = null;
+
+  // Try to retrieve CSRF crumb
+  try {
+    const crumbResponse = await fetch(`${baseUrl}crumbIssuer/api/json`, { headers });
+    if (crumbResponse.ok) {
+      const crumbData = await crumbResponse.json();
+      crumbHeaderName = crumbData.crumbRequestField;
+      crumbValue = crumbData.crumb;
+
+      const setCookieHeaders = crumbResponse.headers.getSetCookie 
+        ? crumbResponse.headers.getSetCookie() 
+        : (crumbResponse.headers.get('set-cookie') ? [crumbResponse.headers.get('set-cookie')] : []);
+        
+      if (setCookieHeaders && setCookieHeaders.length > 0) {
+        cookie = setCookieHeaders.map(c => c.split(';')[0]).join('; ');
+      }
+    }
+  } catch (err) {
+    // Ignore and proceed without crumb
+  }
+
+  const buildUrl = `${jobUrl}build`;
+  const postHeaders = {
+    ...headers
+  };
+  if (crumbHeaderName && crumbValue) {
+    postHeaders[crumbHeaderName] = crumbValue;
+  }
+  if (cookie) {
+    postHeaders['Cookie'] = cookie;
+  }
+
+  const response = await fetch(buildUrl, {
+    method: 'POST',
+    headers: postHeaders
+  });
+
+  if (!response.ok && response.status !== 201) {
+    throw new Error(`Failed to trigger build: HTTP ${response.status}`);
+  }
+
+  return {
+    status: response.status,
+    url: buildUrl
+  };
 }
